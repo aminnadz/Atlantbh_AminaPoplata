@@ -1,0 +1,28 @@
+# Libraries
+import http.client
+import json
+
+# GET request
+conn = http.client.HTTPSConnection("rapidapi.p.rapidapi.com")
+
+headers = {
+    'x-rapidapi-host': "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+    'x-rapidapi-key': "2dbe3b6734msha003247b8a837a5p165343jsna3cf036f4043"
+    }
+
+conn.request("GET", "/apiservices/browsequotes/v1.0/GB/EUR/en-UK/LOND/ISTA/2020-11-05", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+data_string = data.decode("utf-8")
+
+# Testing
+json_obj = json.loads(data_string)
+if(len(json_obj['Quotes']) == 0 or len(json_obj['Places']) == 0  or len(json_obj['Carriers']) == 0 or len(json_obj['Currencies']) == 0):
+    print("TEST DIDN'T PASS!")
+else:
+    print("TEST PASSED!")
+
+
+
